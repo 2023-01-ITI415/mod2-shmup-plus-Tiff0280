@@ -143,6 +143,12 @@ public class Weapon : MonoBehaviour
                 p = MakeProjectile(); // Make left Projectile
                 p.transform.rotation = Quaternion.AngleAxis(-10, Vector3.back);
                 p.vel = p.transform.rotation * vel;
+                p = MakeProjectile(); // Make right additional Projectile
+                p.transform.rotation = Quaternion.AngleAxis(15, Vector3.back);
+                p.vel = p.transform.rotation * vel;
+                p = MakeProjectile(); // Make left additional Projectile
+                p.transform.rotation = Quaternion.AngleAxis(-15, Vector3.back);
+                p.vel = p.transform.rotation * vel;
                 break;
         }
     }
