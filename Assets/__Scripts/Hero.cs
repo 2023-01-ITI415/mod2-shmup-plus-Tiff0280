@@ -5,6 +5,8 @@ using UnityEngine;
 public class Hero : MonoBehaviour {
     static public Hero S { get; private set; } // Singleton
 
+    public ScoreCounter scoreCounter;
+
     [Header("Inscribed")]
     // These fields control the movement of the ship
     public float speed = 30;
@@ -27,7 +29,15 @@ public class Hero : MonoBehaviour {
     // Create a WeaponFireDelegate field named fireDelegate.
     public WeaponFireDelegate fireEvent;
 
-	void Awake()
+    void Start()
+    {
+        // Find a GameObject named ScoreCounter in the Scene Hierarchy
+        GameObject scoreGO = GameObject.Find("CurrentScore");
+        // Get the ScoreCounter (Script) component of scoreGO
+        scoreCounter = scoreGO.GetComponent<ScoreCounter>();
+    }
+
+    void Awake()
     {
         if (S == null)
         {
@@ -92,6 +102,7 @@ public class Hero : MonoBehaviour {
         {
             shieldLevel--;
             Destroy(go);
+            scoreCounter.score -= 30;
         }
         else if (pUp != null)
         {

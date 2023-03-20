@@ -5,6 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(BoundsCheck))]
 public class Enemy : MonoBehaviour
 {
+    public ScoreCounter scoreCounter;
 
     [Header("Inscribed: Enemy")]
     public float speed = 10f; // The speed in m/s
@@ -23,6 +24,16 @@ public class Enemy : MonoBehaviour
 
     protected BoundsCheck bndCheck;
     protected bool calledShipDestroyed = false;
+
+
+    void Start()
+    {
+        // Find a GameObject named ScoreCounter in the Scene Hierarchy
+        GameObject scoreGO = GameObject.Find("CurrentScore");
+        // Get the ScoreCounter (Script) component of scoreGO
+        scoreCounter = scoreGO.GetComponent<ScoreCounter>();
+    }
+
 
     // This is a property: A method that acts like a field
     public Vector3 pos
@@ -82,17 +93,25 @@ public class Enemy : MonoBehaviour
             //If this Enemy is on screen,  damage it.
             if (bndCheck.isOnScreen)
             {
-                // Get the damage amount from the Main WEAP_DICT
-                health -= Main.GET_WEAPON_DEFINITION(p.type).damageOnHit;
-                if (health <= 0)
-                {
-                    if (!calledShipDestroyed)
+                    // Get the damage amount from the Main WEAP_DICT
+                    health -= Main.GET_WEAPON_DEFINITION(p.type).damageOnHit;
+                    if (health <= 0)
                     {
-                        calledShipDestroyed = true;
-                        Main.SHIP_DESTROYED(this);
+                    
+                        if (!calledShipDestroyed)
+                        {
+                            calledShipDestroyed = true;
+                            Main.SHIP_DESTROYED(this);
+                        }
+                        Destroy(this.gameObject);
+
+
+                        if (this.gameObject == Enemy_0)
+                        {
+                            scoreCounter.score += 25;
+                        }
                     }
-                    Destroy(this.gameObject);
-                }
+
             }
             // Destroy the projectile regardless
             Destroy(otherGO);

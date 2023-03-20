@@ -5,5 +5,9 @@ using UnityEngine;
 [RequireComponent (typeof (BoundsCheck))]
 public class Enemy_0 : Enemy {
 
-   
+    
+
+
+
+
 }

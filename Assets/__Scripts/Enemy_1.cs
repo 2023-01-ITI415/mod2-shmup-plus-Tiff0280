@@ -45,4 +45,5 @@ public class Enemy_1 : Enemy {
 
         // print (bndCheck.isOnScreen);
     }
+
 }
