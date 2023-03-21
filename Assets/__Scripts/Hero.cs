@@ -5,7 +5,7 @@ using UnityEngine;
 public class Hero : MonoBehaviour {
     static public Hero S { get; private set; } // Singleton
 
-    
+    public ScoreCounter scoreCounter;
 
     [Header("Inscribed")]
     // These fields control the movement of the ship
@@ -30,6 +30,13 @@ public class Hero : MonoBehaviour {
     public WeaponFireDelegate fireEvent;
 
 
+    void Start()
+    {
+        // Find a GameObject named ScoreCounter in the Scene Hierarchy
+        GameObject scoreGO = GameObject.Find("LivesCounter");         // b
+        // Get the ScoreCounter (Script) component of scoreGO
+        scoreCounter = scoreGO.GetComponent<ScoreCounter>();            // c
+    }
 
     void Awake()
     {
@@ -47,9 +54,9 @@ public class Hero : MonoBehaviour {
         ClearWeapons();
         weapons[0].SetType(eWeaponType.blaster);
     }
-	
-	// Update is called once per frame
-	void Update()
+
+    // Update is called once per frame
+    void Update()
     {
         // Pull in information from the Input class
         float xAxis = Input.GetAxis("Horizontal");
@@ -72,9 +79,11 @@ public class Hero : MonoBehaviour {
             fireEvent();
             //TempFire();
         }
-    }
 
-   // TempFire - deleted to defer firing to Weapon class
+
+
+        // TempFire - deleted to defer firing to Weapon class
+    }
 
     private void OnTriggerEnter(Collider other)
     {
@@ -95,6 +104,7 @@ public class Hero : MonoBehaviour {
         if(enemy != null)
         {
             shieldLevel--;
+            scoreCounter.score -= 1;
             Destroy(go);
            
         }
@@ -116,6 +126,7 @@ public class Hero : MonoBehaviour {
         {
             case eWeaponType.shield:
                 shieldLevel++;
+                scoreCounter.score += 1;
                 break;
 
             default:
@@ -137,6 +148,7 @@ public class Hero : MonoBehaviour {
                 break;
         }
         pUp.AbsorbedBy(gameObject);
+        
     }
 
     public float shieldLevel

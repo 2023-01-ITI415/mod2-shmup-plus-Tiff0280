@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(BoundsCheck))]
 public class Enemy : MonoBehaviour
 {
- 
+    
 
     [Header("Inscribed: Enemy")]
     public float speed = 10f; // The speed in m/s
@@ -76,6 +76,7 @@ public class Enemy : MonoBehaviour
 
     private void OnCollisionEnter(Collision coll)
     {
+        
         GameObject otherGO = coll.gameObject;
 
         ProjectileHero p = otherGO.GetComponent<ProjectileHero>();
@@ -86,33 +87,30 @@ public class Enemy : MonoBehaviour
             //If this Enemy is on screen,  damage it.
             if (bndCheck.isOnScreen)
             {
-                
-                
-                    // Get the damage amount from the Main WEAP_DICT
-                    health -= Main.GET_WEAPON_DEFINITION(p.type).damageOnHit;
-                    if (health <= 0)
+
+
+                // Get the damage amount from the Main WEAP_DICT
+                health -= Main.GET_WEAPON_DEFINITION(p.type).damageOnHit;
+                if (health <= 0)
+                {
+
+                    if (!calledShipDestroyed)
                     {
+                        calledShipDestroyed = true;
+                        Main.SHIP_DESTROYED(this);
 
-
-                        if (!calledShipDestroyed)
-                        {
-                            calledShipDestroyed = true;
-                            Main.SHIP_DESTROYED(this);
-
-                        }
-                        Destroy(this.gameObject);
-                       
                     }
-                        
+                    Destroy(this.gameObject);
+                  
 
+                }
 
                
-
             }
             // Destroy the projectile regardless
             Destroy(otherGO);
 
-            
+
 
         }
         else
@@ -120,4 +118,5 @@ public class Enemy : MonoBehaviour
             print("Enemy hit by non-ProjectileHero: " + otherGO.name);
         }
     }
+
 }

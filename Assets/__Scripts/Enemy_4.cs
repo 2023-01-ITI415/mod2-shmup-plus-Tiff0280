@@ -5,6 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(EnemyShield))]
 public class Enemy_4 : Enemy
 {
+
+
     [Header("Inscribed: Enemy 4")]
     public float duration = 4f;
 
@@ -22,6 +24,8 @@ public class Enemy_4 : Enemy
 
         p0 = p1 = pos;
         InitMovement();
+
+        
     }
 
     void InitMovement()
@@ -115,6 +119,7 @@ public class Enemy_4 : Enemy
 
                 // Destroy this Enemy_4
                 Destroy(gameObject);
+                
             }
         }
         else
