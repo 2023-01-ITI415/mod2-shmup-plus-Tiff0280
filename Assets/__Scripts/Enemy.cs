@@ -97,24 +97,23 @@ public class Enemy : MonoBehaviour
                     health -= Main.GET_WEAPON_DEFINITION(p.type).damageOnHit;
                     if (health <= 0)
                     {
-                    
+                        scoreCounter.score += score;
+
                         if (!calledShipDestroyed)
                         {
                             calledShipDestroyed = true;
                             Main.SHIP_DESTROYED(this);
                         }
                         Destroy(this.gameObject);
+                        
 
-
-                        if (this.gameObject == Enemy_0)
-                        {
-                            scoreCounter.score += 25;
-                        }
                     }
 
             }
             // Destroy the projectile regardless
             Destroy(otherGO);
+            
+
 
         }
         else
