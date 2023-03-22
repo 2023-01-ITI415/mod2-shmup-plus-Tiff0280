@@ -150,6 +150,11 @@ public class Weapon : MonoBehaviour
                 p.transform.rotation = Quaternion.AngleAxis(-15, Vector3.back);
                 p.vel = p.transform.rotation * vel;
                 break;
+
+            case eWeaponType.laser:
+                p = MakeProjectile();
+                p.vel = vel;
+                break;
         }
     }
 
